@@ -29,3 +29,20 @@ export KBUILD_BUILD_VERSION="1"
 SECONDS=0 # builtin bash timer
 ZIPNAME="MRT-Kernel-${DEVICE_CODENAME}-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
 DEFCONFIG="vendor/ginkgo-perf_defconfig"
+
+# green
+msg() {
+    echo -e "\e[1;32m$*\e[0m"
+}
+# red
+msg1() {
+    echo -e "\e[1;31m$*\e[0m"
+}
+# yellow
+msg2() {
+    echo -e "\e[1;33m$*\e[0m"
+}
+# purple
+msg3() {
+    echo -e "\e[1;35m$*\e[0m"
+}
