@@ -1,7 +1,7 @@
 version: 2.1
 jobs:
   build:
-    docker:https://raw.githubusercontent.com/zacky46/kernel-script/main/dtb.sh
+    docker:
       - image: okta10/docker:ubuntu
     steps:
       - run:
