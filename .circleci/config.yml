@@ -7,17 +7,4 @@ jobs:
       - run:
           name: Building Kernel
           command: |
-            wget https://raw.githubusercontent.com/denialinden/kernel-script/main/sync.sh
-            bash sync.sh stable clang
-            cd kernel
-            wget https://raw.githubusercontent.com/denialinden/kernel-script/main/dtb.sh
-            bash dtb.sh lavender clang qpnp
-            git apply qti.patch
-            bash dtb.sh lavender clang qti
-            git restore .
-            wget https://raw.githubusercontent.com/denialinden/kernel-script/main/run.sh
-            bash run.sh lavender newcam clang
-            bash run.sh lavender oldcam clang
-            wget https://raw.githubusercontent.com/denialinden/kernel-script/main/final.sh
-            bash final.sh clang
-            
+            git clone --depth 1 https://github.com/kutemeikito/android_kernel_xiaomi_ginkgo -b Fourteen && cd android_kernel_xiaomi_ginkgo && bash build.sh
