@@ -38,6 +38,23 @@ function push() {
 Compile took $((SECONDS / 60)) minute(s) and $((SECONDS % 60)) second(s) !"
 }
 
+function finerr() {
+    cd ${HOME}
+    curl -s -X POST "https://api.telegram.org/bot$TG_TOKEN/sendMessage" -d chat_id="$TG_CHAT_ID" \
+	    -d "disable_web_page_preview=true" \
+	    -d "parse_mode=html" \
+        -d text="==============================%0A<b>    Building Kernel Failed [❌]</b>%0A=============================="
+    curl -s -X POST "https://api.telegram.org/bot$TG_TOKEN/sendSticker" \
+        -d sticker="CAACAgIAAx0CXjGT1gACDRRhYsUKSwZJQFzmR6eKz2aP30iKqQACPgADr8ZRGiaKo_SrpcJQIQQ" \
+        -d chat_id="$TG_CHAT_ID"
+    curl -F document=@build.log "https://api.telegram.org/bot$TG_TOKEN/sendDocument" \
+        -F chat_id="$TG_CHAT_ID" \
+        -F "disable_web_page_preview=true" \
+        -F "parse_mode=html" \
+        -F caption="Error log❗"
+    exit 1
+}
+
 if [[ $1 = "-r" || $1 = "--regen" ]]; then
     make O=out ARCH=arm64 $DEFCONFIG savedefconfig
     cp out/defconfig arch/arm64/configs/$DEFCONFIG
@@ -82,6 +99,10 @@ make -j$(nproc --all) O=out ARCH=arm64 \
     CROSS_COMPILE=$GCC_64_DIR/bin/aarch64-linux-android- \
     CROSS_COMPILE_ARM32=$GCC_32_DIR/bin/arm-linux-androideabi- \
     CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img
+
+if ! [ -f "out/arch/arm64/boot/Image.gz-dtb" ]; then
+    finerr
+fi
 
 if [ -f "out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "out/arch/arm64/boot/dtbo.img" ]; then
     msg -e "\nKernel compiled succesfully! Zipping up...\n"
