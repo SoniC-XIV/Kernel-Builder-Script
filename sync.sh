@@ -1,36 +1,36 @@
 #!/usr/bin/env bash
 
-# Clone kernel source
-if [[ "$*" =~ "stable" ]]; then
-    git clone --depth=1 https://github.com/denialinden/android_kernel_xiaomi_ginkgo -b Fourteen
-    cd kernel || exit
+# Source Configs
+source $CONFIG
+
+if ! [ -d "${KERNEL_DIR}" ]; then
+    echo "Clonning kernel source..."
+    if ! git clone --depth 1 ${KERNEL_SOURCE} -b ${KERNEL_BRANCH} ${MRT_DIR}/${DEVICE_CODENAME}; then
+        echo "Cloning failed! Aborting..."
+        exit 1
+    fi
 fi
 
-# Clone toolchain
-if [[ "$*" =~ "clang" ]]; then
-    git clone --depth=1 https://gitlab.com/Panchajanya1999/azure-clang clang
-elif [[ "$*" =~ "gcc" ]]; then
-    git clone --depth=1 https://github.com/avinakefin/GCC-12-arm32 arm32
-    git clone --depth=1 https://github.com/avinakefin/GCC-12-aarch64 arm64
+if ! [ -d "${CLANG_DIR}" ]; then
+    echo "Clonning toolchain clang..."
+    if ! git clone --depth 1 https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 ${TC_DIR}; then
+        echo "Cloning failed! Aborting..."
+        exit 1
+    fi
 fi
 
-# Clone anykernel3
-git clone --depth=1 https://github.com/Ariden24/AnyKernel3 -b master
+if ! [ -d "${GCC_64_DIR}" ]; then
+    echo "Clonning gcc toolchain arm64..."
+    if ! git clone --depth=1 -b lineage-19.1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_aarch64_aarch64-linux-android-4.9.git ${GCC_64_DIR}; then
+        echo "Cloning failed! Aborting..."
+        exit 1
+    fi
+fi
 
-# Telegram setup
-push_message() {
-    curl -s -X POST \
-        https://api.telegram.org/bot"{$BOT_TOKEN}"/sendMessage \
-        -d chat_id="${CHAT_ID}" \
-        -d text="$1" \
-        -d "parse_mode=html" \
-        -d "disable_web_page_preview=true"
-}
-
-# Push message to telegram
-push_message "
-<b>======================================</b>
-<b>Start Building :</b> <code>MRT Kernel</code>
-<b>Linux Version :</b> <code>$(make kernelversion | cut -d " " -f5 | tr -d '\n')</code>
-<b>Source Branch :</b> <code>$(git rev-parse --abbrev-ref HEAD)</code>
-<b>======================================</b> "
+if ! [ -d "${GCC_32_DIR}" ]; then
+    echo "Clonning gcc toolchain arm..."
+    if ! git clone --depth=1 -b lineage-19.1 https://github.com/LineageOS/android_prebuilts_gcc_linux-x86_arm_arm-linux-androideabi-4.9.git ${GCC_32_DIR}; then
+        echo "Cloning failed! Aborting..."
+        exit 1
+    fi
+fi

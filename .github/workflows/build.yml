@@ -1,0 +1,27 @@
+name: Kernel Builder
+
+on:
+  push:
+  pull_request:
+    branches:
+      - main
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CONFIG: config.sh
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: okta10/docker:ubuntu
+
+    steps:
+      - name: CheckOut ⚙️
+        uses: actions/checkout@v3
+
+      - name: Sync Source ⏳
+        run: bash sync.sh
