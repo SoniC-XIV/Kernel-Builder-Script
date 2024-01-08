@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Derectory Default
-MRT_DIR="~/MRT"
+MRT_DIR="${HOME}/MRT"
 
 # Code Name Of Device
 DEVICE_CODENAME="ginkgo"
@@ -21,9 +21,11 @@ GCC_32_DIR="${MRT_DIR}/toolchain/arm-linux-androideabi-4.9"
 AK3_DIR="${MRT_DIR}/android/AnyKernel3"
 
 # Default config
-PATH="${CLANG_DIR}/bin:$PATH"
-KBUILD_BUILD_USER="M•R•T"
-KBUILD_BUILD_HOST="Project"
-KBUILD_BUILD_VERSION="1"
+export PATH="${CLANG_DIR}/bin:${PATH}"
+export KBUILD_BUILD_USER="M•R•T"
+export KBUILD_BUILD_HOST="Project"
+export KBUILD_BUILD_VERSION="1"
+
 SECONDS=0 # builtin bash timer
 ZIPNAME="MRT-Kernel-${DEVICE_CODENAME}-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
+DEFCONFIG="vendor/ginkgo-perf_defconfig"

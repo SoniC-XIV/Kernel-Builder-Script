@@ -25,3 +25,6 @@ jobs:
 
       - name: Sync Source ⏳
         run: bash sync.sh
+
+      - name: Building Kernel 🖥️
+        run: bash build.sh
