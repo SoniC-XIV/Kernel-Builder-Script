@@ -29,4 +29,4 @@ jobs:
         run: bash sync.sh
 
       - name: Building Kernel 🖥️
-        run: bash build.sh 2>&1 | tee ${HOME}/build.log
+        run: bash build.sh | tee ${HOME}/build.log
