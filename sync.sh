@@ -5,7 +5,7 @@ source $CONFIG
 
 if ! [ -d "${KERNEL_DIR}" ]; then
     msg "Clonning kernel source..."
-    if ! git clone ${KERNEL_SOURCE} -b ${KERNEL_BRANCH} ${MRT_DIR}/${DEVICE_CODENAME}; then
+    if ! git clone --depth ${KERNEL_SOURCE} -b ${KERNEL_BRANCH} ${MRT_DIR}/${DEVICE_CODENAME}; then
         msg1 "Cloning failed! Aborting..."
         exit 1
     fi
