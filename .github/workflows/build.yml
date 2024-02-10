@@ -27,8 +27,8 @@ jobs:
            
         - name: Sync Source ⏳
           run: |
-           chmod +x && bash sync.sh
+           bash sync.sh
           
         - name: Building Kernel 🖥️
           run: |
-           chmod +x && bash build.sh | tee ${HOME}/build.log
+           bash build.sh | tee ${HOME}/build.log
