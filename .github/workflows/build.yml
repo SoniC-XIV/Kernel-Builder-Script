@@ -28,9 +28,7 @@ jobs:
         uses: actions/checkout@master
         
       - name: Initialize environment
-          run: |
-           chmod +x initialize
-           bash initialize
+          run: bash initialize
 
       - name: Sync Source ⏳
         run: bash sync.sh
