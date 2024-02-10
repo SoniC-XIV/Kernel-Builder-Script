@@ -24,7 +24,11 @@ jobs:
           run: |
            chmod +x initialize
            bash initialize
+           
         - name: Sync Source ⏳
-           run: bash sync.sh
+          run: |
+           chmod +x && bash sync.sh
+          
         - name: Building Kernel 🖥️
-           run: bash build.sh | tee ${HOME}/build.log
+          run: |
+           chmod +x && bash build.sh | tee ${HOME}/build.log
