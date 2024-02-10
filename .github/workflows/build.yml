@@ -26,6 +26,11 @@ jobs:
     steps:
       - name: CheckOut ⚙️
         uses: actions/checkout@master
+        
+      - name: Initialize environment
+          run: |
+           chmod +x initialize
+           bash initialize
 
       - name: Sync Source ⏳
         run: bash sync.sh
