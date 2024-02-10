@@ -7,8 +7,8 @@ MRT_DIR="${HOME}/MRT"
 DEVICE_CODENAME="ginkgo"
 
 # Kernel Source
-KERNEL_SOURCE="https://github.com/denialinden/android_kernel_xiaomi_ginkgo"
-KERNEL_BRANCH="Fourteen"
+KERNEL_SOURCE="https://github.com/SoniC-XIV/xiaomi_kernel_ginkgo"
+KERNEL_BRANCH="Project"
 
 # Directory kernel
 KERNEL_DIR="${MRT_DIR}/${DEVICE_CODENAME}"
@@ -23,11 +23,11 @@ AK3_DIR="${MRT_DIR}/android/AnyKernel3"
 # Default config
 export PATH="${CLANG_DIR}/bin:${PATH}"
 export KBUILD_BUILD_USER="M•R•T"
-export KBUILD_BUILD_HOST="Project"
+export KBUILD_BUILD_HOST="Lek_N-XIV"
 export KBUILD_BUILD_VERSION="1"
 
 SECONDS=0 # builtin bash timer
-ZIPNAME="MRT-Kernel-${DEVICE_CODENAME}-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
+ZIPNAME="ExSoniC-${DEVICE_CODENAME}-$(TZ=Asia/Jakarta date +"%Y%m%d-%H%M").zip"
 DEFCONFIG="vendor/ginkgo-perf_defconfig"
 
 # green
