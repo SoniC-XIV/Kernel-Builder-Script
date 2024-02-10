@@ -1,15 +1,9 @@
 name: Kernel Builder
 
-on:
-  push:
+on: # [push]
   workflow_dispatch:
-  pull_request:
-    branches:
-      - main
-
-defaults:
-  run:
-    shell: bash
+  watch:
+    types: [started]
 
 env:
   CONFIG: config.sh
@@ -22,16 +16,19 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ubuntu:jammy-20211029
-
     steps:
-      - name: CheckOut ⚙️
-        uses: actions/checkout@master
-        
-      - name: Initialize environment
-          run: bash initialize
+        - name: Checkout
+          uses: actions/checkout@master
 
-      - name: Sync Source ⏳
-        run: bash sync.sh
+        - name: Initialize environment
+          run: |
+           chmod +x initialize
+           bash initialize
+        run:
+        shell: bash
 
-      - name: Building Kernel 🖥️
-        run: bash build.sh | tee ${HOME}/build.log
+        - name: Sync Source ⏳
+           run: bash sync.sh
+
+        - name: Building Kernel 🖥️
+           run: bash build.sh | tee ${HOME}/build.log
